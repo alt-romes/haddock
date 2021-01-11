@@ -7,6 +7,7 @@
 {-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
+
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 
 -----------------------------------------------------------------------------
@@ -319,7 +320,8 @@ type instance NoGhcTc DocNameI = DocNameI
 type instance IdP DocNameI = DocName
 
 instance CollectPass DocNameI where
-  collectXXPat _ _ ext = dataConCantHappen ext
+  collectXXPat _ x _ = dataConCantHappen x
+  collectXXHsBindsLR x _ = dataConCantHappen x
 
 instance NamedThing DocName where
   getName (Documented name _) = name
@@ -828,6 +830,7 @@ type instance XConDeclField  DocNameI = NoExtField
 type instance XXConDeclField DocNameI = DataConCantHappen
 
 type instance XXPat DocNameI = DataConCantHappen
+type instance XXHsBindsLR DocNameI a = DataConCantHappen
 
 type instance XCInjectivityAnn DocNameI = NoExtField
 
